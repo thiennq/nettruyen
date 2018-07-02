@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const path = require('path');
+const opn = require('opn');
+const {get, listGenres} = require('./lib');
+const cheerio = require('cheerio');
 
 app.use(express.static('public'));
 app.use(express.static('chapters'));
@@ -15,6 +18,12 @@ if (global.isCli) {
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.static(path.join(home, 'chapters')));
 }
+
+app.get('/genres', async (req, res) => {
+  let arr = listGenres;
+  res.send(arr);
+});
+
 
 app.get('/chapters', (req, res) => {
   let result = fs.readdirSync(
@@ -35,3 +44,6 @@ app.get('/chapters/:id', (req, res) => {
 
 let port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Your comic server is running on port ${port}`));
+if (global.isCli) {
+  opn(`http://localhost:${port}`);
+}

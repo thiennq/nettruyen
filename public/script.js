@@ -1,6 +1,6 @@
 function pad(n, len) {
   let str = n + '';
-  for (i = 0; i < len - str.length; i++, str = '0' + str);
+  while (str.length < len) str = '0' + str;
   return str;
 }
 

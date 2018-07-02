@@ -9,6 +9,9 @@ Crawl 1 comic to read offline.
 
 ## How to use
 
+
+## Using like a boss (developer way)
+
 ### Crawl the comic
 - Edit `CHAPTER_LIST_URL`, `CHAPTER_START`, `CHAPTER_END`, `PARALLEL_DOWNLOAD` in `crawl.js`
 - Run
@@ -21,7 +24,9 @@ node crawl.js
 ```bash
 node server.js
 ```
-- Open your browser http://localhost:3000 and enjoy
+
+
+
 
 
 ## Features
@@ -32,4 +37,6 @@ node server.js
 - [x] Setting for parallel download
 - [x] Pass `COMIC`/`CHAPTER_START`/`CHAPTER_END`/`PARALLEL_DOWNLOAD` into crawler args
 - [x] Build cli
+- [x] Open in browser automatically
+- [x] Select/search comic by wizard
 - [ ] Manage multiple comic
