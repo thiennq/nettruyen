@@ -7,8 +7,14 @@ const path = require('path');
 const argv = require('yargs')
   .usage(`
     How to use:
-      - crawl: nettruyen crawl -c <comic-handle> -p <parallel_download>
-      - server: nettruyen server <port>
+      - crawl follow the wizard:
+      nettruyen crawl
+
+      - crawl with args:
+      nettruyen crawl -c <comic-handle> -p <parallel_download>
+
+      - read comic offline (on browser but the server is running in your pc):
+      nettruyen server <port>
   `)
   .argv;
 
