@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  color: white;
+  font-size: 24px;
+  background-color: black;
+}
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background-color: purple;
+}
+h1 {
+  text-align: center;
+  font-size: 32px;
+  line-height: 50px;
+}
+#container {
+  padding-top: 50px;
+  width: 100%;
+  height: 100%;
+}
+#chapter-list {
+  width: 250px;
+  position: fixed;
+  left: 0;
+  height: 100%;
+  overflow-y: scroll;
+  border-right: 1px dashed white;
+}
+
+#reading {
+  width: calc(100% - 250px);
+  padding-left: 250px;
+}
+
+#chapter-list .chapter.active {
+  color: yellow;
+}
+
+#reading .page {
+  text-align: center;
+}
+
+.chapter {
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+}
