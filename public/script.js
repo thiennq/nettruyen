@@ -34,6 +34,11 @@ $(document).on('keyup', function(e) {
   if (e.key == "ArrowLeft") {
     gotoPrevChap();
   }
+  if (e.key.toLowerCase() == 'g' || e.key.toLowerCase() == 'j') {
+    var chap = prompt('Mời nhập chap');
+    chap = pad(chap, 4);
+    gotoChap(chap);
+  }
 })
 
 function getCurrentChap() {

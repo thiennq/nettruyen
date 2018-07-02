@@ -29,9 +29,26 @@ h1 {
   width: 250px;
   position: fixed;
   left: 0;
-  height: 100%;
+  height: calc(100% - 300px);
   overflow-y: scroll;
   border-right: 1px dashed white;
+}
+
+#help-text {
+  height: 290px;
+  position: fixed;
+  bottom: 0;
+  background-color: #444;
+  width: 240px;
+  border-right: 1px dashed #fff;
+  padding: 0 5px;
+}
+.help-text-title {
+  text-align: center;
+  margin: 5px;
+}
+.guide-list li {
+  font-size: 18px;
 }
 
 #reading {
