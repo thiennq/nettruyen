@@ -27,9 +27,9 @@ node server.js
 ## Features
 - [x] Crawl comic & read offline
 - [x] Use keyboard to switch next/prev chapter
-- [ ] Hot key to GOTO a chapter
+- [x] Hot key to GOTO a chapter
 - [x] Remember last chapter you read
+- [x] Setting for parallel download
 - [ ] Manage multiple comic
-- [ ] Pass `comic name`/`chapt start`/`chapt end` into cli args
+- [ ] Pass `COMIC`/`CHAPTER_START`/`CHAPTER_END`/`PARALLEL_DOWNLOAD` into crawler args
 - [ ] Build cli
-- [ ] Setting for parallel download
