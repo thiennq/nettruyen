@@ -1,7 +1,15 @@
 {
+  "name": "nettruyen",
+  "version": "0.1.0",
+  "description": "nettruyen cli with <3",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
-    "request": "^2.87.0"
+    "link": "^0.1.5",
+    "request": "^2.87.0",
+    "yargs": "^12.0.1"
+  },
+  "bin": {
+    "nettruyen": "./cli.js"
   }
 }

@@ -2,11 +2,25 @@ const request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
+const argv = require('yargs')
+  .usage('contact me at: quangthien.cse10@gmail.com')
+  .option( "s", { alias: "start", demand: false, describe: "start from ? chapter", type: "number" } )
+  .option( "e", { alias: "end", demand: false, describe: "end at ? chapter", type: "number" } )
+  .option( "p", { alias: "parallel", demand: false, describe: "end at ? chapter", type: "number" } )
+  .option( "c", { alias: "comic", demand: false, describe: "handle of comic want to crawl", type: "string" } )
+  .argv;
 
-const CHAPTER_LIST_URL = 'http://www.nettruyen.com/truyen-tranh/huyet-ma-nhan';
-const CHAPTER_START = 258;
-const CHAPTER_END = 999;
-const PARALLEL_DOWNLOAD = 10;
+const CHAPTER_LIST_URL = argv.comic ? `http://www.nettruyen.com/truyen-tranh/${argv.comic}` : 'http://www.nettruyen.com/truyen-tranh/huyet-ma-nhan';
+const CHAPTER_START = parseInt(argv.start) || 1;
+const CHAPTER_END = parseInt(argv.end) || 9999;
+const PARALLEL_DOWNLOAD = parseInt(argv.parallel) || 10;
+
+
+let home = __dirname;
+if (global.isCli) {
+  console.log('running in a cli');
+  home = process.cwd();
+}
 
 function get(url) {
   return new Promise((r, _) => {
@@ -45,7 +59,7 @@ async function downloadFirst(folder, arr) {
 }
 
 async function crawlChapter(chap, url) {
-  let folder = path.join(__dirname, 'chapters', pad(chap, 4));
+  let folder = path.join(home, 'chapters', pad(chap, 4));
   try {
     fs.mkdirSync(folder);
   } catch (e) {}
@@ -57,42 +71,30 @@ async function crawlChapter(chap, url) {
   let arr = $('.page-chapter img').toArray().map(img => $(img).attr('src'));
 
   let jobs = arr.map((img, i) => ({url: img, page: i}));
-  console.log('jobs.length',jobs.length);
-
   var pool = [];
   for (let i = 0 ; i < PARALLEL_DOWNLOAD; i++) {
     pool.push(downloadFirst(folder, jobs));
   }
   await Promise.all(pool);
-
-  // for (let i = 0; i < arr.length; i++) {
-  //
-  // }
-
-  // let img = arr[i];
-  // let filePath = path.join(folder, `${pad(i, 4)}.png`);
-  // download(img, filePath).then(_ => {
-  //
-  // })
-
 }
 
 async function main() {
-    let html = await get(CHAPTER_LIST_URL);
-    let $ = cheerio.load(html);
-    let arr = $('.list-chapter .chapter').toArray().map(dom => $(dom).find('a').attr('href')).reverse();
-    for (let url of arr) {
-      let ex = /chap\-(\d+)/.exec(url);
-      let chap = ex[1] - 0;
-      if (chap < CHAPTER_START || chap > CHAPTER_END) {
-        console.log(`skip chap ${chap}`);
-        continue;
-      }
+  try {
+    fs.mkdirSync(path.join(home, 'chapters'));
+  } catch (e) {}
 
-      console.log(`TODO: crawl chap ${chap}`);
-      await crawlChapter(chap, url);
-
+  let html = await get(CHAPTER_LIST_URL);
+  let $ = cheerio.load(html);
+  let arr = $('.list-chapter .chapter').toArray().map(dom => $(dom).find('a').attr('href')).reverse();
+  for (let url of arr) {
+    let ex = /chap\-(\d+)/.exec(url);
+    let chap = ex[1] - 0;
+    if (chap < CHAPTER_START || chap > CHAPTER_END) {
+      continue;
     }
+
+    await crawlChapter(chap, url);
+  }
 }
 
 
